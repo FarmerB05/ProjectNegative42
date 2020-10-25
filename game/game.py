@@ -28,6 +28,8 @@ class Game:
         if event.type == pygame.VIDEORESIZE:
             if not self.settings.fullscreen:
                 self.screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
+            return True 
+        return False
 
     def update(self):
         pass
