@@ -6,10 +6,10 @@ class Settings:
 
     def __init__(self):
         self.file_path = 'data/settings.json'
-        self.screen_size = [1280, 720] # pug.size()
+        self.screen_size = pug.size()
         self.fullscreen = False
         self.resolution = [1280, 720]
-        self.fps = 60
+        self.fps = 0
 
         self.controls = {
 

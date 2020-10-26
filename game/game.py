@@ -24,11 +24,14 @@ class Game:
         self.fps = self.settings.fps
         self.dt = self.clock.tick(self.fps) / 1000
 
+        self.last_screen = [0, 0]
+
     def video_event(self, event):
         if event.type == pygame.VIDEORESIZE:
             if not self.settings.fullscreen:
+                self.last_screen = [self.screen.get_width(), self.screen.get_height()]
                 self.screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-            return True 
+            return True
         return False
 
     def update(self):

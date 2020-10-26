@@ -1,1 +1,1 @@
-{"fullscreen": {"value": false}, "resolution": {"value": [1280, 720]}, "fps": {"value": 60}, "controls": {"up": {"value": "w"}, "left": {"value": "a"}, "down": {"value": "s"}, "right": {"value": "d"}, "dodge": {"value": "space"}}}
+{"fullscreen": {"value": false}, "resolution": {"value": [1280, 720]}, "fps": {"value": 0}, "controls": {"up": {"value": "w"}, "left": {"value": "a"}, "down": {"value": "s"}, "right": {"value": "d"}, "dodge": {"value": "space"}}}

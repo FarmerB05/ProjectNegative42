@@ -1,5 +1,12 @@
 import pygame
 
+def scale_h(rect, w):
+    # rect = [w, h]
+    return int((rect[1]/rect[0]) * w)
+
+def scale_w(rect, h):
+    return int((rect[0]/rect[1]) * h)
+
 def str_2_key(str):
     if str == 'space':
         return pygame.K_SPACE

@@ -9,11 +9,14 @@ class Player(Entity, PlayerInput):
         Entity.__init__(self, screen, rect, health=health)
         PlayerInput.__init__(self, boundry, speed)
 
-    def scale(self):
-        self.boundry = [0, 0, self.screen.get_width(), self.screen.get_height()]
+    def scale(self, last, boundry):
         self.speed = int(self.screen.get_width() / 5)
+        
+        self.rect[0] = boundry[0]
+        self.rect[1] = boundry[1]
         self.rect[2] = int(self.screen.get_width() / 30)
         self.rect[3] = int(self.screen.get_width() / 30)
+        self.boundry = boundry
 
     def update(self, dt):
         Entity.update(self)
