@@ -5,9 +5,9 @@ import pyautogui as pug
 class Settings:
 
     def __init__(self):
-        self.file_path = 'data/settings.json'
+        self.file_path = 'data/data.json'
         self.screen_size = pug.size()
-        self.fullscreen = False
+        self.fullscreen = True
         self.resolution = [1280, 720]
         self.fps = 0
 
@@ -25,21 +25,23 @@ class Settings:
         with open(self.file_path, 'r') as f:
             data = json.load(f)
 
-        self.fullscreen = data['fullscreen']['value']
-        self.resolution = data['resolution']['value']
-        self.fps = data['fps']['value']
+        self.fullscreen = data['settings']['fullscreen']['value']
+        self.resolution = data['settings']['resolution']['value']
+        self.fps = data['settings']['fps']['value']
 
         # Load controls
         for i in self.controls:
-            self.controls[i] = data['controls'][i]['value']
+            self.controls[i] = data['settings']['controls'][i]['value']
 
     def wow3(self, var, name, data):
-        data[name] = {}
-        data[name]['value'] = var
+        data['settings'][name]  = {}
+        data['settings'][name]['value'] = var
 
     def save(self):
         with open(self.file_path, 'r') as f:
             data = json.load(f)
+
+        data['settings'] = {}
 
         # Save variables
         self.wow3(self.fullscreen, 'fullscreen', data)
@@ -47,10 +49,10 @@ class Settings:
         self.wow3(self.fps, 'fps', data)
 
         # Save Controls Dict
-        data['controls'] = {}
+        data['settings']['controls'] = {}
         for i in self.controls:
-            data['controls'][i] = {}
-            data['controls'][i]['value'] = self.controls[i]
+            data['settings']['controls'][i] = {}
+            data['settings']['controls'][i]['value'] = self.controls[i]
 
         with open(self.file_path, 'w') as f:
             json.dump(data, f)

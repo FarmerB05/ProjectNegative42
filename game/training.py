@@ -15,7 +15,7 @@ class Training(Game):
         y = int(self.screen.get_height()/2 - h/2)
         self.platform_rect = [x, y, w, h]
 
-        self.player = Player(self.screen, [self.platform_rect[0], self.platform_rect[1], 25, 25], self.platform_rect, 150)
+        self.player = Player(self.screen, [self.platform_rect[0], self.platform_rect[1], 25, 25], self.platform_rect, 150, name='player', save_entity=True)
 
     def run(self):
         while self.running:

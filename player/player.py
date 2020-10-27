@@ -4,9 +4,9 @@ from player.player_input import PlayerInput
 
 class Player(Entity, PlayerInput):
 
-    def __init__(self, screen, rect, boundry, speed, health=100):
+    def __init__(self, screen, rect, boundry, speed, health=100, name=None, save_entity=False):
         # Speed Metric: Time it takes to move across entire screen.
-        Entity.__init__(self, screen, rect, health=health)
+        Entity.__init__(self, screen, rect, health=health, name=name, save_entity=save_entity)
         PlayerInput.__init__(self, boundry, speed)
 
     def scale(self, last, boundry):
