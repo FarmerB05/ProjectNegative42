@@ -1,6 +1,7 @@
 import pygame
 import time
 from settings.settings import Settings
+from gui.text import Text
 
 def window(settings):
     if settings.fullscreen:
@@ -25,6 +26,7 @@ class Game:
         self.dt = self.clock.tick(self.fps) / 1000
 
         self.last_screen = [0, 0]
+        self.fps_label = Text(self.screen, int(self.clock.get_fps()), [0, 0, 50, 50], font_size=35)
 
     def video_event(self, event):
         if event.type == pygame.VIDEORESIZE:
@@ -35,7 +37,8 @@ class Game:
         return False
 
     def update(self):
-        pass
+        self.fps_label = Text(self.screen, int(self.clock.get_fps()), [0, 0, 50, 50], font_size=35)
 
     def draw(self):
-        pass
+        self.screen.fill((0, 0, 0))
+        self.fps_label.draw()

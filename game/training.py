@@ -38,6 +38,8 @@ class Training(Game):
                 # Scale
                 self.platform_rect = [int(self.screen.get_width()/2 - int(self.screen.get_width()/1.7)/2), int(self.screen.get_height()/2 - convert.scale_h([5504, 3808], int(self.screen.get_width()/1.7))/2), int(self.screen.get_width()/1.7), convert.scale_h([5504, 3808], int(self.screen.get_width()/1.7))]
                 self.player.scale(self.last_screen, self.platform_rect)
+                self.inventory_display.update()
+                self.inventory_display.update_grid()
 
     def update(self):
         super().update()
@@ -45,7 +47,8 @@ class Training(Game):
 
     def draw(self):
         super().draw()
-        self.screen.fill((0, 0, 0))
         pygame.draw.rect(self.screen, (0, 150, 0), self.platform_rect)
         self.player.draw()
+
+        self.inventory_display.update()
         self.inventory_display.draw()
