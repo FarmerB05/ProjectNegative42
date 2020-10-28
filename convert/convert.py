@@ -1,4 +1,5 @@
 import pygame
+from item.sword import Sword
 
 def scale_h(rect, w):
     # rect = [w, h]
@@ -6,6 +7,11 @@ def scale_h(rect, w):
 
 def scale_w(rect, h):
     return int((rect[0]/rect[1]) * h)
+
+def str_2_item(str, level):
+    if str == 'sword':
+        return Sword(pygame.image.load('sword.png'))
+    return None
 
 def str_2_key(str):
     if str == 'space':

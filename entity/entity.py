@@ -5,7 +5,7 @@ import json
 
 class Entity:
 
-    def __init__(self, screen, rect, health=100, name=None, save_entity=False, inventory=None):
+    def __init__(self, screen, rect, health=100, name=None, save_entity=False):
 
         # Load settings
         self.settings = Settings()
@@ -30,20 +30,12 @@ class Entity:
         self.health_rect = [int(self.rect[0] + self.rect[2]/2 - int(self.rect[2] * 1.3) / 2), int(self.rect[1] - int(self.rect[3] / 8) * 3), int(self.rect[2] * 1.3), int(self.rect[3] / 8)]
         self.health_color = (255, 0, 0)
 
-        # Inventory
-        # At somepoint for ease of initializing the inventory I might create a str_2_item function
-        if inventory == None:
-            self.inventory = []
-        else:
-            self.inventory = inventory
-
-        # Load data on initializing if it exists
-        if self.save_entity:
-            try:
-                self.load()
-            except:
-                self.save()
-                self.load()
+        # Loadout
+        # These if not none will need to be passed into the control script for entity 
+        self.weapon = None
+        self.helmet = None
+        self.chestplate = None
+        self.boots = None
 
     def health_bar(self):
         self.health_rect = [int(self.rect[0] + self.rect[2]/2 - int(self.rect[2] * 1.3) / 2), int(self.rect[1] - int(self.rect[3] / 8) * 3), int(self.rect[2] * 1.3), int(self.rect[3] / 8)]
@@ -65,6 +57,7 @@ class Entity:
         self.health_bar()
         pygame.draw.rect(self.screen, (255, 0, 255), self.rect)
 
+    """
     # Maybe: Encrypt data so user can't easily edit their items
     def save(self):
         # If the entity doesn't need to be saved, then don't save it.
@@ -94,3 +87,5 @@ class Entity:
 
             print('loaded')
             print(self.inventory)
+
+    """

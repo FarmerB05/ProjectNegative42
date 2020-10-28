@@ -3,6 +3,8 @@ import time
 from game.game import Game
 from player.player import Player
 import convert.convert as convert
+from inventory.inventory import Inventory
+from inventory.inventory_display import InventoryDisplay
 
 class Training(Game):
 
@@ -15,7 +17,10 @@ class Training(Game):
         y = int(self.screen.get_height()/2 - h/2)
         self.platform_rect = [x, y, w, h]
 
-        self.player = Player(self.screen, [self.platform_rect[0], self.platform_rect[1], 25, 25], self.platform_rect, 150, name='player', save_entity=True)
+        self.inventory = Inventory()
+        self.inventory_display = InventoryDisplay(self.screen)
+
+        self.player = Player(self.screen, [self.platform_rect[0], self.platform_rect[1], 25, 25], self.platform_rect, 150, name='player', save_entity=False)
 
     def run(self):
         while self.running:
@@ -43,3 +48,4 @@ class Training(Game):
         self.screen.fill((0, 0, 0))
         pygame.draw.rect(self.screen, (0, 150, 0), self.platform_rect)
         self.player.draw()
+        self.inventory_display.draw()

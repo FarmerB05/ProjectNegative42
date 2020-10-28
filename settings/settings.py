@@ -7,7 +7,7 @@ class Settings:
     def __init__(self):
         self.file_path = 'data/data.json'
         self.screen_size = pug.size()
-        self.fullscreen = True
+        self.fullscreen = False
         self.resolution = [1280, 720]
         self.fps = 0
 
