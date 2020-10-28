@@ -25,19 +25,19 @@ class InventoryDisplay:
         # Create grid
         grid = []
         length = 10
-        margin = 2
-        w = int(inventory_rect[2] / length + 1) # 5 is number of slots
-        h = int(inventory_rect[3] / length + 1) # 5 is number of slots
+        margin = 10
+        w = int((inventory_rect[2] - (margin * length + 1)) / length)
+        h = int((inventory_rect[3] - (margin * length + 1)) / length)
         counter_2 = 0
         counter_1 = 0
         for i in range(len(self.inventory.inventory)):
-            if i % (length - 1) == 0 and i > 0:
+            if i % length == 0 and i > 0:
                 counter_2 += 1
                 counter_1 = 0
-                
-            grid.append([inventory_rect[0] + w * counter_1 * 1.1, inventory_rect[1] + h * counter_2 * 1.1, w, w])
-            counter_1 += 1
 
+            grid.append([inventory_rect[0] + (margin) + (margin * counter_1) + (w * counter_1), inventory_rect[1] + (margin) + (margin * counter_2) + (h * counter_2), w, w])
+
+            counter_1 += 1
 
         pygame.draw.rect(self.screen, (255, 255, 255), inventory_rect)
 
