@@ -5,6 +5,7 @@ from game.training import Training
 
 if __name__ == '__main__':
     pygame.init()
+
     wow = Settings()
     wow.save()
 

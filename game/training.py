@@ -5,6 +5,8 @@ from player.player import Player
 import convert.convert as convert
 from inventory.inventory import Inventory
 from inventory.inventory_display import InventoryDisplay
+from gui.button import Button
+from convert.convert import str_2_key
 
 class Training(Game):
 
@@ -19,6 +21,7 @@ class Training(Game):
 
         self.inventory = Inventory()
         self.inventory_display = InventoryDisplay(self.screen)
+        self.inventory_open = False
 
         self.player = Player(self.screen, [self.platform_rect[0], self.platform_rect[1], 25, 25], self.platform_rect, 150, name='player', save_entity=False)
 
@@ -38,8 +41,11 @@ class Training(Game):
                 # Scale
                 self.platform_rect = [int(self.screen.get_width()/2 - int(self.screen.get_width()/1.7)/2), int(self.screen.get_height()/2 - convert.scale_h([5504, 3808], int(self.screen.get_width()/1.7))/2), int(self.screen.get_width()/1.7), convert.scale_h([5504, 3808], int(self.screen.get_width()/1.7))]
                 self.player.scale(self.last_screen, self.platform_rect)
-                self.inventory_display.update()
-                self.inventory_display.update_grid()
+                self.inventory_display.scale()
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == str_2_key('e'):
+                    self.inventory_open = not self.inventory_open
 
     def update(self):
         super().update()
@@ -47,8 +53,10 @@ class Training(Game):
 
     def draw(self):
         super().draw()
-        pygame.draw.rect(self.screen, (0, 150, 0), self.platform_rect)
-        self.player.draw()
+        if not self.inventory_open:
+            pygame.draw.rect(self.screen, (0, 150, 0), self.platform_rect)
+            self.player.draw()
 
-        self.inventory_display.update()
-        self.inventory_display.draw()
+        if self.inventory_open:
+            self.inventory_display.update()
+            self.inventory_display.draw()

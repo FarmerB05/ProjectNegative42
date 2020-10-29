@@ -12,7 +12,7 @@ class Inventory:
 
     def __init__(self):
         self.inventory = []
-        for i in range(93):
+        for i in range(100):
             self.inventory.append('sword')
 
         self.file_path = 'data/data.json'

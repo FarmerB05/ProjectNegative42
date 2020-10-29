@@ -16,20 +16,33 @@ class InventoryDisplay:
         self.inventory = Inventory()
 
         # Inventory elements
+        # Inventory background
+        self.inventory_background = [int(self.screen.get_width()/2 - int(self.screen.get_width()/1.2)/2), int(self.screen.get_height()/2 - scale_h([14, 9], int(self.screen.get_width()/1.2))/2), int(self.screen.get_width()/1.2), scale_h([14, 9], int(self.screen.get_width()/1.2))]
         # 1. Global inventory
-        self.inventory_rect = [int(self.screen.get_width()/2 - int(self.screen.get_width()/2)/2.5), int(self.screen.get_height()/2 - scale_h([1, 1], int(self.screen.get_width()/2))/2.5), int(self.screen.get_width()/2), scale_h([1, 1], int(self.screen.get_width()/2))]
+        self.inventory_rect = [self.inventory_background[0] + self.inventory_background[2] - int(self.screen.get_width()/3), int(self.screen.get_height()/2 - scale_h([1, 1], int(self.screen.get_width()/3))/2), int(self.screen.get_width()/3), scale_h([1, 1], int(self.screen.get_width()/3))]
+        self.inventory_rect[0] = self.inventory_background[0] + self.inventory_background[2] - int(self.screen.get_width()/3) - int(self.inventory_rect[2]/6)
         self.page = 0
-
         self.button_page_up = Button('>', [self.inventory_rect[0] + self.inventory_rect[2], self.inventory_rect[1], int(self.inventory_rect[2]/6), self.inventory_rect[3]], self.screen, colors=[(105,105,105), (169,169,169)])
         self.button_page_down = Button('<', [self.inventory_rect[0] - int(self.inventory_rect[2]/6), self.inventory_rect[1], int(self.inventory_rect[2]/6), self.inventory_rect[3]], self.screen, colors=[(105,105,105), (169,169,169)])
         self.page_text = Text(self.screen, str(self.page + 1), [self.inventory_rect[0], self.inventory_rect[1] - 50, self.inventory_rect[2], 50])
-
         self.button_delay_1 = time.time() + 0.15
         self.button_delay_2 = time.time() + 0.15
+
+        # 2. Other part
 
         # Grid
         self.grid = []
         self.update_grid()
+        self.scale()
+
+    def scale(self):
+        self.update_grid()
+        self.inventory_background = [int(self.screen.get_width()/2 - int(self.screen.get_width()/1.2)/2), int(self.screen.get_height()/2 - scale_h([14, 9], int(self.screen.get_width()/1.2))/2), int(self.screen.get_width()/1.2), scale_h([14, 9], int(self.screen.get_width()/1.2))]
+        self.inventory_rect = [self.inventory_background[0] + self.inventory_background[2] - int(self.screen.get_width()/3), int(self.screen.get_height()/2 - scale_h([1, 1], int(self.screen.get_width()/3))/2), int(self.screen.get_width()/3), scale_h([1, 1], int(self.screen.get_width()/3))]
+        self.inventory_rect[0] = self.inventory_background[0] + self.inventory_background[2] - int(self.screen.get_width()/3) - int(self.inventory_rect[2]/4)
+        self.button_page_up.rect = [self.inventory_rect[0] + self.inventory_rect[2], self.inventory_rect[1], int(self.inventory_rect[2]/6), self.inventory_rect[3]]
+        self.button_page_down.rect = [self.inventory_rect[0] - int(self.inventory_rect[2]/6), self.inventory_rect[1], int(self.inventory_rect[2]/6), self.inventory_rect[3]]
+        self.page_text.rect = [self.inventory_rect[0], self.inventory_rect[1] - 50, self.inventory_rect[2], 50]
 
     # update functions
     def update_grid(self):
@@ -49,13 +62,8 @@ class InventoryDisplay:
         print('updated_grid')
 
     def update(self):
-        self.inventory_rect = [int(self.screen.get_width()/2 - int(self.screen.get_width()/2.5)/2), int(self.screen.get_height()/2 - scale_h([1, 1], int(self.screen.get_width()/2.5))/2), int(self.screen.get_width()/2.5), scale_h([1, 1], int(self.screen.get_width()/2.5))]
-
-        self.button_page_up.rect = [self.inventory_rect[0] + self.inventory_rect[2], self.inventory_rect[1], int(self.inventory_rect[2]/6), self.inventory_rect[3]]
-        self.button_page_down.rect = [self.inventory_rect[0] - int(self.inventory_rect[2]/6), self.inventory_rect[1], int(self.inventory_rect[2]/6), self.inventory_rect[3]]
         self.button_page_up.update()
         self.button_page_down.update()
-        self.page_text.rect = [self.inventory_rect[0], self.inventory_rect[1] - 50, self.inventory_rect[2], 50]
         self.page_text.update()
         self.page_text.text = str(self.page + 1)
 
@@ -80,7 +88,9 @@ class InventoryDisplay:
         # Draw box
         # Scaling is going to be a fucking pain
         # Drawing in center of screen for time being
+        self.update_grid()
         pygame.draw.rect(self.screen, (255, 255, 255), self.inventory_rect)
+
         self.button_page_up.draw()
         self.button_page_down.draw()
         self.page_text.draw()
@@ -95,4 +105,5 @@ class InventoryDisplay:
                 break
 
     def draw(self):
+        pygame.draw.rect(self.screen, (144, 0, 144), self.inventory_background)
         self.global_inventory()

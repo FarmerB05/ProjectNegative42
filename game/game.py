@@ -5,9 +5,9 @@ from gui.text import Text
 
 def window(settings):
     if settings.fullscreen:
-        screen = pygame.display.set_mode(settings.screen_size, pygame.FULLSCREEN)
+        screen = pygame.display.set_mode(settings.screen_size, pygame.FULLSCREEN | pygame.HWSURFACE)
     else:
-        screen = pygame.display.set_mode(settings.resolution)
+        screen = pygame.display.set_mode(settings.resolution, pygame.RESIZABLE | pygame.DOUBLEBUF)
 
     return screen
 
