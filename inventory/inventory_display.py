@@ -17,32 +17,105 @@ class InventoryDisplay:
 
         # Inventory elements
         # Inventory background
-        self.inventory_background = [int(self.screen.get_width()/2 - int(self.screen.get_width()/1.2)/2), int(self.screen.get_height()/2 - scale_h([14, 9], int(self.screen.get_width()/1.2))/2), int(self.screen.get_width()/1.2), scale_h([14, 9], int(self.screen.get_width()/1.2))]
         # 1. Global inventory
-        self.inventory_rect = [self.inventory_background[0] + self.inventory_background[2] - int(self.screen.get_width()/3), int(self.screen.get_height()/2 - scale_h([1, 1], int(self.screen.get_width()/3))/2), int(self.screen.get_width()/3), scale_h([1, 1], int(self.screen.get_width()/3))]
-        self.inventory_rect[0] = self.inventory_background[0] + self.inventory_background[2] - int(self.screen.get_width()/3) - int(self.inventory_rect[2]/6)
+        self.inventory_rect = [self.screen.get_width()/2 - int(self.screen.get_width()/4/2), 10, int(self.screen.get_width()/4), scale_h([1, 1], int(self.screen.get_width()/4))]
         self.page = 0
+
+        # Text and Buttons
         self.button_page_up = Button('>', [self.inventory_rect[0] + self.inventory_rect[2], self.inventory_rect[1], int(self.inventory_rect[2]/6), self.inventory_rect[3]], self.screen, colors=[(105,105,105), (169,169,169)])
         self.button_page_down = Button('<', [self.inventory_rect[0] - int(self.inventory_rect[2]/6), self.inventory_rect[1], int(self.inventory_rect[2]/6), self.inventory_rect[3]], self.screen, colors=[(105,105,105), (169,169,169)])
         self.page_text = Text(self.screen, str(self.page + 1), [self.inventory_rect[0], self.inventory_rect[1] - 50, self.inventory_rect[2], 50])
         self.button_delay_1 = time.time() + 0.15
         self.button_delay_2 = time.time() + 0.15
 
-        # 2. Other part
+        # 2. Preview
+        self.preview_image = None
+        self.preview_rect = []
+
+        self.box_width = None
+        # slots
+        # weapon
+        self.weapon_rect = []
+        self.weapon_placeholder = None
+
+        # helmet
+        self.helmet_rect = []
+        self.helmet_placeholder = None
+
+        # chestplate
+        self.chestplate_rect = []
+        self.chestplate_placeholder = None
+
+        # boots
+        self.boots_rect = []
+        self.boots_placeholder = None
 
         # Grid
         self.grid = []
-        self.update_grid()
+
+         # Set value to everything
         self.scale()
 
     def scale(self):
-        self.update_grid()
-        self.inventory_background = [int(self.screen.get_width()/2 - int(self.screen.get_width()/1.2)/2), int(self.screen.get_height()/2 - scale_h([14, 9], int(self.screen.get_width()/1.2))/2), int(self.screen.get_width()/1.2), scale_h([14, 9], int(self.screen.get_width()/1.2))]
-        self.inventory_rect = [self.inventory_background[0] + self.inventory_background[2] - int(self.screen.get_width()/3), int(self.screen.get_height()/2 - scale_h([1, 1], int(self.screen.get_width()/3))/2), int(self.screen.get_width()/3), scale_h([1, 1], int(self.screen.get_width()/3))]
-        self.inventory_rect[0] = self.inventory_background[0] + self.inventory_background[2] - int(self.screen.get_width()/3) - int(self.inventory_rect[2]/4)
+        self.inventory_rect = [self.screen.get_width()/2 - int(self.screen.get_width()/3.5/2), 10, int(self.screen.get_width()/3.5), scale_h([1, 1], int(self.screen.get_width()/3.5))]
         self.button_page_up.rect = [self.inventory_rect[0] + self.inventory_rect[2], self.inventory_rect[1], int(self.inventory_rect[2]/6), self.inventory_rect[3]]
         self.button_page_down.rect = [self.inventory_rect[0] - int(self.inventory_rect[2]/6), self.inventory_rect[1], int(self.inventory_rect[2]/6), self.inventory_rect[3]]
         self.page_text.rect = [self.inventory_rect[0], self.inventory_rect[1] - 50, self.inventory_rect[2], 50]
+
+        # preview
+        self.preview_rect = [self.screen.get_width()/2 - int(self.screen.get_width()/10/2), self.inventory_rect[1] + self.inventory_rect[3] + 15, int(self.screen.get_width()//10), scale_h([12, 20], int(self.screen.get_width()//10))]
+
+        margin = 5
+        self.box_width = int((self.preview_rect[3] - (margin*3))/3)
+        # weapon
+        self.weapon_rect = [
+            self.preview_rect[0] + self.preview_rect[2] + int(self.box_width/5),
+            self.preview_rect[1] + self.preview_rect[3]/2 - int(self.box_width/2), # this height /2
+            self.box_width,
+            self.box_width
+        ]
+
+        self.weapon_placeholder = pygame.transform.scale(pygame.image.load('weapon_placeholder.png'), (self.weapon_rect[2], self.weapon_rect[3]))
+
+        # Armour slots
+        # helmet
+        self.helmet_rect = [
+
+            self.preview_rect[0] - self.box_width - int(self.box_width/5),
+            self.preview_rect[1],
+            self.box_width,
+            self.box_width
+
+        ]
+
+        self.helmet_placeholder = pygame.transform.scale(pygame.image.load('helmet_placeholder.png'), (self.helmet_rect[2], self.helmet_rect[3]))
+
+        # chestplate
+        self.chestplate_rect = [
+
+            self.preview_rect[0] - self.box_width - int(self.box_width/5),
+            self.preview_rect[1] + self.preview_rect[3]/2 - int(self.box_width/2),
+            self.box_width,
+            self.box_width
+
+        ]
+
+        self.chestplate_placeholder = pygame.transform.scale(pygame.image.load('chestplate_placeholder.png'), (self.chestplate_rect[2], self.chestplate_rect[3]))
+
+        # boots
+        self.boots_rect = [
+
+            self.preview_rect[0] - self.box_width - int(self.box_width/5),
+            self.preview_rect[1] + self.preview_rect[3] - self.box_width,
+            self.box_width,
+            self.box_width
+
+        ]
+
+        self.boots_placeholder = pygame.transform.scale(pygame.image.load('boots_placeholder.png'), (self.boots_rect[2], self.boots_rect[3]))
+
+        # Update Grid
+        self.update_grid()
 
     # update functions
     def update_grid(self):
@@ -105,5 +178,16 @@ class InventoryDisplay:
                 break
 
     def draw(self):
-        pygame.draw.rect(self.screen, (144, 0, 144), self.inventory_background)
         self.global_inventory()
+        pygame.draw.rect(self.screen, (133, 0, 133), self.preview_rect)
+        pygame.draw.rect(self.screen, (133, 0, 133), self.weapon_rect)
+        self.screen.blit(self.weapon_placeholder, (self.weapon_rect[0], self.weapon_rect[1]))
+
+        pygame.draw.rect(self.screen, (133, 0, 133), self.helmet_rect)
+        self.screen.blit(self.helmet_placeholder, (self.helmet_rect[0], self.helmet_rect[1]))
+
+        pygame.draw.rect(self.screen, (133, 0, 133), self.chestplate_rect)
+        self.screen.blit(self.chestplate_placeholder, (self.chestplate_rect[0], self.chestplate_rect[1]))
+
+        pygame.draw.rect(self.screen, (133, 0, 133), self.boots_rect)
+        self.screen.blit(self.boots_placeholder, (self.boots_rect[0], self.boots_rect[1]))
