@@ -1,5 +1,6 @@
 import pygame
-from item.sword import Sword
+from item.items import *
+import random
 
 def scale_h(rect, w):
     # rect = [w, h]
@@ -8,9 +9,16 @@ def scale_h(rect, w):
 def scale_w(rect, h):
     return int((rect[0]/rect[1]) * h)
 
-def str_2_item(str, level):
+def str_2_item(str, level, rarity, selected):
     if str == 'sword':
-        return Sword(pygame.image.load('sword.png'))
+        return Sword(level, rarity, selected)
+    if str == 'helmet':
+        return Helmet(level, rarity, selected)
+    if str == 'chestplate':
+        return Chestplate(level, rarity, selected)
+    if str == 'boots':
+        return Boots(level, rarity, selected)
+
     return None
 
 def str_2_key(str):

@@ -1,5 +1,4 @@
 import json
-from item.sword import Sword
 import pygame
 from convert.convert import str_2_item
 
@@ -11,9 +10,18 @@ from convert.convert import str_2_item
 class Inventory:
 
     def __init__(self):
-        self.inventory = []
-        for i in range(100):
-            self.inventory.append('sword')
+        self.inventory = [] # [item_name, level, rarity, selected] # rarity: common, rare, epic, legendary
+        for i in range(4):
+            self.inventory.append(['sword', 2, 'common', False])
+            
+        for i in range(4):
+            self.inventory.append(['helmet', 2, 'common', False])
+
+        for i in range(4):
+            self.inventory.append(['chestplate', 2, 'common', False])
+
+        for i in range(4):
+            self.inventory.append(['boots', 2, 'common', False])
 
         self.file_path = 'data/data.json'
         self.save()
