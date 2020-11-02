@@ -21,4 +21,5 @@ class Player(Entity, PlayerInput):
         self.rect[1] = y
 
     def draw(self):
+        print(self.weapon)
         Entity.draw(self)

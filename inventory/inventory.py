@@ -11,16 +11,16 @@ class Inventory:
 
     def __init__(self):
         self.inventory = [] # [item_name, level, rarity, selected] # rarity: common, rare, epic, legendary
-        for i in range(4):
+        for i in range(24):
             self.inventory.append(['sword', 2, 'common', False])
-            
-        for i in range(4):
+
+        for i in range(24):
             self.inventory.append(['helmet', 2, 'common', False])
 
-        for i in range(4):
+        for i in range(24):
             self.inventory.append(['chestplate', 2, 'common', False])
 
-        for i in range(4):
+        for i in range(24):
             self.inventory.append(['boots', 2, 'common', False])
 
         self.file_path = 'data/data.json'

@@ -19,11 +19,11 @@ class Training(Game):
         y = int(self.screen.get_height()/2 - h/2)
         self.platform_rect = [x, y, w, h]
 
-        self.inventory = Inventory()
-        self.inventory_display = InventoryDisplay(self.screen)
-        self.inventory_open = False
-
         self.player = Player(self.screen, [self.platform_rect[0], self.platform_rect[1], 25, 25], self.platform_rect, 150, name='player', save_entity=False)
+
+        self.inventory = Inventory()
+        self.inventory_display = InventoryDisplay(self.screen, [self.player])
+        self.inventory_open = False
 
     def run(self):
         while self.running:
@@ -42,7 +42,7 @@ class Training(Game):
                 self.platform_rect = [int(self.screen.get_width()/2 - int(self.screen.get_width()/1.7)/2), int(self.screen.get_height()/2 - convert.scale_h([5504, 3808], int(self.screen.get_width()/1.7))/2), int(self.screen.get_width()/1.7), convert.scale_h([5504, 3808], int(self.screen.get_width()/1.7))]
                 self.player.scale(self.last_screen, self.platform_rect)
                 self.inventory_display.scale()
-            
+
             if event.type == pygame.KEYDOWN:
                 if event.key == str_2_key('e'):
                     self.inventory_open = not self.inventory_open
